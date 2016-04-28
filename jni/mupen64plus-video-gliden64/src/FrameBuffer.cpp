@@ -910,7 +910,6 @@ void FrameBufferList::renderBuffer(u32 _address)
 	FrameBuffer * pFilteredBuffer = PostProcessor::get().doBlur(PostProcessor::get().doGammaCorrection(pBuffer));
 	pBuffer->m_postProcessed = pFilteredBuffer->m_postProcessed;
 	ogl.getRender().dropRenderState();
-	gSP.changed = gDP.changed = 0;
 
 	CombinerInfo::get().setCombine(EncodeCombineMode(0, 0, 0, TEXEL0, 0, 0, 0, 1, 0, 0, 0, TEXEL0, 0, 0, 0, 1));
 	glDisable( GL_BLEND );
@@ -1778,14 +1777,16 @@ void RDRAMtoFrameBuffer::CopyFromRDRAM(u32 _address, bool _bCFB)
 	gDPTile * pTile0 = gSP.textureTile[0];
 	gSP.textureTile[0] = &tile0;
 
+	const u32 cycleType = gDP.otherMode.cycleType;
+	gDP.otherMode.cycleType = G_CYC_1CYCLE;
 	CombinerInfo::get().setCombine(EncodeCombineMode(0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0));
+	currentCombiner()->disableBlending();
+	gDP.otherMode.cycleType = cycleType;
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	currentCombiner()->updateFrameBufferInfo();
 
 	glDisable(GL_DEPTH_TEST);
-	const u32 gdpChanged = gDP.changed & CHANGED_CPU_FB_WRITE;
-	gSP.changed = gDP.changed = 0;
 
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_pCurBuffer->m_FBO);
 	OGLRender::TexturedRectParams params((float)x0, (float)y0, (float)width, (float)height,
@@ -1796,7 +1797,7 @@ void RDRAMtoFrameBuffer::CopyFromRDRAM(u32 _address, bool _bCFB)
 
 	gSP.textureTile[0] = pTile0;
 
-	gDP.changed |= gdpChanged | CHANGED_RENDERMODE | CHANGED_COMBINE;
+	gDP.changed |= CHANGED_RENDERMODE | CHANGED_COMBINE;
 }
 
 void RDRAMtoFrameBuffer::Reset()

@@ -167,7 +167,7 @@ public class NativeConfigFiles
 
         readHiResSettings(game, global, appData);
 
-        mupen64plus_cfg.put( "Video-GLideN64", "configVersion", "8" );
+        mupen64plus_cfg.put( "Video-GLideN64", "configVersion", "9" );
 
         mupen64plus_cfg.put( "Video-GLideN64", "AspectRatio", aspectRatio);
         mupen64plus_cfg.put( "Video-GLideN64", "ForcePolygonOffset", boolToTF( global.isPolygonOffsetHackEnabled ) );

@@ -116,13 +116,14 @@ private:
 			uDepthMode, uDepthSource, uRenderState,
 			uMaxTile, uTextureDetail, uTexturePersp, uTextureFilterMode, uMSAASamples,
 			uAlphaCompareMode, uAlphaDitherMode, uColorDitherMode,
-			uCvgXAlpha, uAlphaCvgSel;
+			uCvgXAlpha, uAlphaCvgSel,
+			uForceBlendCycle1, uForceBlendCycle2;
 
 		fUniform uMinLod, uDeltaZ, uAlphaTestValue, uMSAAScale;
 
 		fv2Uniform uScreenScale, uDepthScale, uFogScale, uScreenCoordsScale;
 
-		iv2Uniform uMSTexEnabled, uFbMonochrome, uFbFixedAlpha, uForceBlend;
+		iv2Uniform uMSTexEnabled, uFbMonochrome, uFbFixedAlpha;
 
 		i4Uniform uBlendMux1, uBlendMux2;
 	};

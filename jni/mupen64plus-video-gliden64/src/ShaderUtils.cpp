@@ -77,7 +77,7 @@ GLuint createShaderProgram(const char * _strVertex, const char * _strFragment)
 
 static
 const char* fragment_shader_blender1 =
-"  if (uForceBlend[0] != 0) {							\n"
+"  if (uForceBlendCycle1 != 0) {						\n"
 "    muxPM[0] = clamp(vec4(color2, alpha2), 0.0, 1.0);	\n"
 "    muxA[0] = muxPM[0].a;								\n"
 "    muxB[0] = 1.0 - muxA[uBlendMux1[1]];				\n"
@@ -89,7 +89,7 @@ const char* fragment_shader_blender1 =
 
 static
 const char* fragment_shader_blender2 =
-"  if (uForceBlend[1] != 0) {					\n"
+"  if (uForceBlendCycle2 != 0) {				\n"
 "    muxPM[0] = vec4(color2, alpha2);			\n"
 "    muxA[0] = alpha2;							\n"
 "    muxB[0] = 1.0 - muxA[uBlendMux2[1]];		\n"

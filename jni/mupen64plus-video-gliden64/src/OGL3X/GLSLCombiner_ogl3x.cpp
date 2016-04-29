@@ -503,7 +503,8 @@ void ShaderCombiner::_locateUniforms() {
 	LocateUniform(uTextureDetail);
 	LocateUniform(uTexturePersp);
 	LocateUniform(uTextureFilterMode);
-	LocateUniform(uForceBlend);
+	LocateUniform(uForceBlendCycle1);
+	LocateUniform(uForceBlendCycle2);
 
 	LocateUniform(uMinLod);
 	LocateUniform(uDeltaZ);
@@ -620,12 +621,14 @@ void ShaderCombiner::updateBlendMode(bool _bForce)
 		}
 	}
 
-	m_uniforms.uForceBlend.set(forceBlend1, forceBlend2, _bForce);
+	m_uniforms.uForceBlendCycle1.set(forceBlend1, _bForce);
+	m_uniforms.uForceBlendCycle2.set(forceBlend2, _bForce);
 }
 
 void ShaderCombiner::disableBlending()
 {
-	m_uniforms.uForceBlend.set(0, 0, false);
+	m_uniforms.uForceBlendCycle1.set(0, false);
+	m_uniforms.uForceBlendCycle2.set(0, false);
 }
 
 void ShaderCombiner::updateDitherMode(bool _bForce)

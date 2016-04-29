@@ -166,14 +166,13 @@ MAIN_SHADER_VERSION
 "uniform lowp int uAlphaCvgSel;		\n"
 "uniform lowp float uAlphaTestValue;\n"
 "uniform mediump vec2 uDepthScale;	\n"
-"uniform lowp ivec4 uBlendMux1;	\n"
-"uniform lowp ivec2 uForceBlend;	\n"
+"uniform lowp ivec4 uBlendMux1;		\n"
+"uniform lowp int uForceBlendCycle1;\n"
 "in lowp vec4 vShadeColor;			\n"
 "in mediump vec2 vTexCoord0;		\n"
 "in mediump vec2 vTexCoord1;		\n"
 "in mediump vec2 vLodTexCoord;		\n"
 "in lowp float vNumLights;			\n"
-"lowp vec3 input_color;				\n"
 "out lowp vec4 fragColor;			\n"
 ;
 
@@ -212,16 +211,17 @@ MAIN_SHADER_VERSION
 "uniform lowp int uAlphaCvgSel;		\n"
 "uniform lowp float uAlphaTestValue;\n"
 "uniform mediump vec2 uDepthScale;	\n"
-"uniform lowp ivec4 uBlendMux1;	\n"
-"uniform lowp ivec2 uForceBlend;	\n"
+"uniform lowp ivec4 uBlendMux1;		\n"
+"uniform lowp int uForceBlendCycle1;\n"
 "in lowp vec4 vShadeColor;			\n"
 "in lowp float vNumLights;			\n"
-"lowp vec3 input_color;				\n"
 "out lowp vec4 fragColor;			\n"
 ;
 
 static const char* fragment_shader_header_common_variables_blend_mux_2cycle =
-"uniform lowp ivec4 uBlendMux2;      \n";
+"uniform lowp ivec4 uBlendMux2;			\n"
+"uniform lowp int uForceBlendCycle2;	\n"
+;
 
 static const char* fragment_shader_header_noise =
 	"lowp float snoise();\n";
@@ -285,7 +285,7 @@ static const char* fragment_shader_header_main =
 "  lowp vec4 muxB = vec4(0.0, 1.0, 1.0, 0.0);														\n"
 "  lowp vec4 vec_color, combined_color;																\n"
 "  lowp float alpha1, alpha2;																		\n"
-"  lowp vec3 color1, color2;																		\n"
+"  lowp vec3 color1, color2, input_color;															\n"
 ;
 
 static const char* fragment_shader_dither =
